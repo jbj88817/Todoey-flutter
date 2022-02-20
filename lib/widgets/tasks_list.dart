@@ -3,21 +3,12 @@ import 'package:todoey/widgets/tasks_tile.dart';
 
 import '../models/task.dart';
 
-class TasksList extends StatefulWidget {
-  const TasksList({
-    Key? key,
-  }) : super(key: key);
+class TasksList extends StatelessWidget {
+  const TasksList({Key? key, required this.tasks, this.onChanged})
+      : super(key: key);
 
-  @override
-  State<TasksList> createState() => _TasksListState();
-}
-
-class _TasksListState extends State<TasksList> {
-  List<Task> tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'Buy eggs'),
-    Task(name: 'Buy bread'),
-  ];
+  final List<Task> tasks;
+  final TaskTileChanged? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +18,7 @@ class _TasksListState extends State<TasksList> {
           isChecked: tasks[index].isDone,
           title: tasks[index].name,
           onChanged: (checked) {
-            setState(() {
-              tasks[index] = tasks[index].copyWith(isDone: checked);
-            });
+            onChanged?.call(checked, index);
           },
         );
       },
@@ -37,3 +26,5 @@ class _TasksListState extends State<TasksList> {
     );
   }
 }
+
+typedef TaskTileChanged = void Function(bool? b1, int index);
