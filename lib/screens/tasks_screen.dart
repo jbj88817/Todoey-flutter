@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_data.dart';
 import 'package:todoey/screens/add_task_screen.dart';
 
-import '../models/task.dart';
 import '../widgets/tasks_list.dart';
 
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'Buy eggs'),
-    Task(name: 'Buy bread'),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +25,9 @@ class _TasksScreenState extends State<TasksScreen> {
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: AddTaskScreen(
                   newTaskTitle: (title) {
-                    setState(() {
-                      tasks.add(Task(name: title));
-                    });
+                    // setState(() {
+                    //   tasks.add(Task(name: title));
+                    // });
                   },
                 ),
               ),
@@ -74,7 +64,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '${tasks.where((element) => element.isDone == false).length} Tasks remaining',
+                  '${context.watch<TaskData>().tasks.where((element) => element.isDone == false).length} Tasks remaining',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -93,14 +83,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(
-                tasks: tasks,
-                onChanged: (checked, index) {
-                  setState(() {
-                    tasks[index] = tasks[index].copyWith(isDone: checked);
-                  });
-                },
-              ),
+              child: const TasksList(),
             ),
           )
         ],
