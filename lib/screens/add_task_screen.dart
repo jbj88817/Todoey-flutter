@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todoey/models/task.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen(
-      {Key? key, required this.tasks, required this.callbackList})
-      : super(key: key);
+  const AddTaskScreen({Key? key, required this.newTaskTitle}) : super(key: key);
 
-  final List<Task> tasks;
-  final ValueChanged<List<Task>> callbackList;
+  final ValueChanged<String> newTaskTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +44,8 @@ class AddTaskScreen extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 if (inputText.isNotEmpty) {
-                  tasks.add(
-                    Task(name: inputText),
-                  );
+                  newTaskTitle.call(inputText);
                 }
-                callbackList.call(tasks);
                 Navigator.pop(context);
               },
               color: Colors.lightBlueAccent,
