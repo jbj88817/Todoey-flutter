@@ -15,11 +15,7 @@ class TasksList extends StatelessWidget {
     return ListView.builder(
       itemBuilder: (context, index) {
         return TaskTile(
-          isChecked: tasks[index].isDone,
-          title: tasks[index].name,
-          onChanged: (checked) {
-            context.read<TaskData>().toggleTask(index, checked ?? false);
-          },
+          index: index,
         );
       },
       itemCount: tasks.length,
