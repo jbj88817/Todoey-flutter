@@ -18,6 +18,9 @@ class TaskTile extends StatelessWidget {
     bool isChecked = tasks[index].isDone;
 
     return ListTile(
+        onLongPress: () {
+          context.read<TaskData>().deleteTask(tasks[index]);
+        },
         title: Text(
           tasks[index].name,
           style: TextStyle(
